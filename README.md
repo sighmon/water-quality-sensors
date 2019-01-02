@@ -97,6 +97,12 @@ EC:600.4
 TDS:324
 SAL:0.29
 GRAV:1.000
+
+// Neverfail spring water
+EC:211.6
+TDS:114
+SAL:0.10
+GRAV:1.000
 ```
 
 ## Blog posts
