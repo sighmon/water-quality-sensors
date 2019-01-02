@@ -12,14 +12,17 @@ const char *appKey = APPKEY;
 TheThingsNetwork ttn(loraSerial, debugSerial, freqPlan);
 
 // Atlas Scientific Conductivity K 1.0 sensors
-#include <SoftwareSerial.h>                           //we have to include the SoftwareSerial library, or else we can't use it
-#define rx 10                                          //define what pin rx is going to be
-#define tx 11                                          //define what pin tx is going to be
-SoftwareSerial myserial(rx, tx);                      //define how the soft serial port is going to work
-String inputstring = "";                              //a string to hold incoming data from the PC
-String sensorstring = "";                             //a string to hold the data from the Atlas Scientific product
-boolean input_string_complete = false;                //have we received all the data from the PC
-boolean sensor_string_complete = false;               //have we received all the data from the Atlas Scientific product
+// Use SoftwareSerial to send/receive from the sensors so we can still use debugSerial
+#include <SoftwareSerial.h>
+#define rx 10
+#define tx 11
+SoftwareSerial myserial(rx, tx);
+// The incoming data string to communicate from serial monitor to the sensors
+String inputstring = "";
+boolean input_string_complete = false;
+// The data string from the Atlas Scientific sensors
+String sensorstring = "";
+boolean sensor_string_complete = false;
 
 void setup() {
   // The Things Uno setup
@@ -28,8 +31,11 @@ void setup() {
 
   // Sensor setup
   myserial.begin(9600);
-  inputstring.reserve(10);                            //set aside some bytes for receiving data from the PC
-  sensorstring.reserve(30);                           //set aside some bytes for receiving data from Atlas Scientific product
+
+  // Reserve some bytes for strings sent from the serial monitor
+  inputstring.reserve(10);
+  // Reserve some bytes for data from the sensors
+  sensorstring.reserve(30);
       
   // Initialize LED output pin
   pinMode(LED_BUILTIN, OUTPUT);
@@ -45,37 +51,38 @@ void setup() {
 //  ttn.join(appEui, appKey);
 }
 
-void serialEvent() {
-  // For the sensors
-  inputstring = Serial.readStringUntil(13);           //read the string until we see a <CR>
-  input_string_complete = true;                       //set the flag used to tell if we have received a completed string from the PC
-}
-
 void loop() {
-  // Sensor reading
-  if (input_string_complete) {                        //if a string from the PC has been received in its entirety
-    myserial.print(inputstring);                      //send that string to the Atlas Scientific product
-    myserial.print('\r');                             //add a <CR> to the end of the string
-    inputstring = "";                                 //clear the string
-    input_string_complete = false;                    //reset the flag used to tell if we have received a completed string from the PC
+
+  // If a complete string has been received from the serial monitor, send it to the sensors
+  if (input_string_complete) {
+    myserial.print(inputstring);
+    // Add a <CR> to the end of the string
+    myserial.print('\r');
+    // Clear and reset the flag to say we've completed sending
+    inputstring = "";
+    input_string_complete = false;
   }
 
-  if (myserial.available() > 0) {                     //if we see that the Atlas Scientific product has sent a character
-    char inchar = (char)myserial.read();              //get the char we just received
-    sensorstring += inchar;                           //add the char to the var called sensorstring
-    if (inchar == '\r') {                             //if the incoming character is a <CR>
-      sensor_string_complete = true;                  //set the flag
+  // If we receive a character from the sensors, add it to the sensorstring until we see a <CR>
+  if (myserial.available() > 0) {
+    char inchar = (char)myserial.read();
+    sensorstring += inchar;
+    if (inchar == '\r') {
+      // It's the end of the sensor reading!
+      sensor_string_complete = true;
     }
   }
 
 
-  if (sensor_string_complete == true) {               //if a string from the Atlas Scientific product has been received in its entirety
-    if (isdigit(sensorstring[0]) == false) {          //if the first character in the string is a digit
-      debugSerial.println(sensorstring);                   //send that string to the PC's serial monitor
+  // If we're at the end of the sensor string, send it to the serial monitor and The Things Network
+  if (sensor_string_complete == true) {
+    if (isdigit(sensorstring[0]) == false) {
+      // If the first character in the string is a digit send that to the serial monitor
+      debugSerial.println(sensorstring);
     }
-    else                                              //if the first character in the string is NOT a digit
-    {
-      print_EC_data();                                //then call this function 
+    else {
+      // Print the sensor data
+      print_EC_data();
 
       // Send sensor data to The Things Network
 
@@ -93,8 +100,9 @@ void loop() {
       // Send the data
       ttn.sendBytes(data, sizeof(data));
     }
-    sensorstring = "";                                //clear the string
-    sensor_string_complete = false;                   //reset the flag used to tell if we have received a completed string from the Atlas Scientific product
+    // Clear and reset the sensorstring
+    sensorstring = "";
+    sensor_string_complete = false;
   }
 }
 
@@ -136,6 +144,7 @@ void print_EC_data(void) {
 }
 
 void printHex(char X) {
+  // For debugging, print a byte to the console as a hex string
 
   if (X < 16) {debugSerial.print("0");}
 
