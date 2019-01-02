@@ -41,8 +41,8 @@ void setup() {
   ttn.showStatus();
 
 // Uncomment to join the network
-  debugSerial.println("-- JOIN");
-  ttn.join(appEui, appKey);
+//  debugSerial.println("-- JOIN");
+//  ttn.join(appEui, appKey);
 }
 
 void serialEvent() {
@@ -76,6 +76,22 @@ void loop() {
     else                                              //if the first character in the string is NOT a digit
     {
       print_EC_data();                                //then call this function 
+
+      // Send sensor data to The Things Network
+
+      // Convert sensorstring to a byte array
+      byte data[sensorstring.length()];
+      sensorstring.getBytes(data, sizeof(data));
+
+      debugSerial.println("-- BYTE ARRAY TO SEND");
+      for (int i=0; i < sizeof(data); i++){
+         printHex(data[i]);
+      }
+      debugSerial.println();
+      debugSerial.println();
+
+      // Send the data
+      ttn.sendBytes(data, sizeof(data));
     }
     sensorstring = "";                                //clear the string
     sensor_string_complete = false;                   //reset the flag used to tell if we have received a completed string from the Atlas Scientific product
@@ -97,6 +113,11 @@ void print_EC_data(void) {
   SAL = strtok(NULL, ",");                            //let's pars the array at each comma
   GRAV = strtok(NULL, ",");                           //let's pars the array at each comma
 
+//  debugSerial.println("-- RAW SENSOR READING");
+//  debugSerial.println(sensorstring);
+//  debugSerial.println();
+
+  debugSerial.println();
   debugSerial.println("-- SENSOR READING");
   debugSerial.print("EC:");                                //we now print each value we parsed separately
   debugSerial.println(EC);                                 //this is the EC value
@@ -112,4 +133,13 @@ void print_EC_data(void) {
   debugSerial.println();                                   //this just makes the output easier to read
   
 //f_ec= atof(EC);                                     //uncomment this line to convert the char to a float
+}
+
+void printHex(char X) {
+
+  if (X < 16) {debugSerial.print("0");}
+
+  debugSerial.print(X, HEX);
+  debugSerial.print(" ");
+
 }
