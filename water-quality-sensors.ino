@@ -1,6 +1,7 @@
 #include <TheThingsNetwork.h>
-const char *appEui = "70B3D57ED0015F29";
-const char *appKey = "6BD409A13DD083BE428710ADECACC870";
+#include "secrets.h"
+const char *appEui = APPEUI;
+const char *appKey = APPKEY;
 
 #define loraSerial Serial1
 #define debugSerial Serial
@@ -40,8 +41,8 @@ void setup() {
   ttn.showStatus();
 
 // Uncomment to join the network
-//  debugSerial.println("-- JOIN");
-//  ttn.join(appEui, appKey);
+  debugSerial.println("-- JOIN");
+  ttn.join(appEui, appKey);
 }
 
 void serialEvent() {
