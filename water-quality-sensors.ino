@@ -1,3 +1,9 @@
+// ==========================
+// Water quality conductivity
+// Sent via The Things Uno
+// By Simon Loffler 2019
+// ==========================
+
 #include <TheThingsNetwork.h>
 #include "secrets.h"
 const char *appEui = APPEUI;
