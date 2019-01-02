@@ -25,6 +25,21 @@ GND | GND
 A (Out) | 10 (Digital)
 B (Out) | 11 (Digital)
 
+## Software
+
+The Things Uno has a LoRaWAN chip that can send signals ~15km to [The Things Network](https://www.thethingsnetwork.org), which is great for remote sensors.
+
+I'm using a `secrets.h` file to store the API keys. So to run this code on your Arduino, create a secrets file with the following code:
+
+```c
+// secrets.h
+#define APPEUI "YOUR_APP_EUI"
+#define APPKEY "YOUR_APP_KEY"
+```
+
+To get an APPEUI and APPKEY, follow The Things Network setup guide:
+https://www.thethingsnetwork.org/docs/devices/uno/quick-start.html#create-an-account
+
 ## Output
 
 Once running, you should see this debug output to your serial monitor, where:
@@ -73,3 +88,33 @@ TDS:27881
 SAL:33.94
 GRAV:1.026
 ```
+
+## Blog posts
+
+I've been blogging about my experience setting these sensors up over at: [sighmon.com/says](https://sighmon.com/says)
+
+The story begins here: [sighmon.com/says/water-quality-monitor/](https://sighmon.com/says/water-quality-monitor/)
+
+## License
+
+The MIT License
+
+Copyright (c) 2019 Simon Loffler
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
