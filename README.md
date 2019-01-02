@@ -73,10 +73,10 @@ Sending: mac tx uncnf 1 302E30302C302C302E30302C312E30303000
 
 ## Sample readings
 
-Here are some sample readings from Port Willunga, South Australia.
+Here are some sample readings from Port Willunga, South Australia, 2nd Jan 2019.
 
 ```bash
-// Fresh water
+// Fresh water from the tap
 EC:601.2
 TDS:325
 SAL:0.29
@@ -87,6 +87,16 @@ EC:51631
 TDS:27881
 SAL:33.94
 GRAV:1.026
+```
+
+And one from the Adelaide CBD, South Australia, 2nd Jan 2019.
+
+```bash
+// Fresh water from the tap at a new apartment block
+EC:600.4
+TDS:324
+SAL:0.29
+GRAV:1.000
 ```
 
 ## Blog posts

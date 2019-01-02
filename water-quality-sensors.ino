@@ -53,8 +53,8 @@ void setup() {
   ttn.showStatus();
 
 // Uncomment to join the network
-  debugSerial.println("-- JOIN");
-  ttn.join(appEui, appKey);
+//  debugSerial.println("-- JOIN");
+//  ttn.join(appEui, appKey);
 }
 
 void loop() {
