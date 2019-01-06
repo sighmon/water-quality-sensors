@@ -6,8 +6,14 @@
 
 #include <TheThingsNetwork.h>
 #include "secrets.h"
+// OTAA authentication
 const char *appEui = APPEUI;
 const char *appKey = APPKEY;
+
+// ABP authentication
+const char *devAddr = DEVADDR;
+const char *nwkSKey = NWKSKEY;
+const char *appSKey = APPSKEY;
 
 #define loraSerial Serial1
 #define debugSerial Serial
@@ -33,10 +39,10 @@ boolean sensor_string_complete = false;
 void setup() {
   // The Things Uno setup
   loraSerial.begin(57600);
-  debugSerial.begin(9600);
+  debugSerial.begin(9600);  // Try 57600
 
   // Sensor setup
-  myserial.begin(9600);
+  myserial.begin(9600);  // Try 57600
 
   // Reserve some bytes for strings sent from the serial monitor
   inputstring.reserve(10);
@@ -52,9 +58,14 @@ void setup() {
   debugSerial.println("-- STATUS");
   ttn.showStatus();
 
-// Uncomment to join the network
-  debugSerial.println("-- JOIN");
-  ttn.join(appEui, appKey);
+  // Uncomment to join the network using OTAA
+//   debugSerial.println("-- JOIN");
+//   ttn.join(appEui, appKey);
+
+  // Uncomment to join the network using ABP
+//  debugSerial.println("-- PERSONALIZE");
+//  ttn.personalize(devAddr, nwkSKey, appSKey);
+
 }
 
 void loop() {
