@@ -11,8 +11,8 @@ function Decoder(bytes, port) {
   var decoded = {};
 
   if (port === 1) {
-    var byteString = String.fromCharCode.apply(String, bytes);
-    var stringArray = byteString.split(',');
+    var stringFromBytes = String.fromCharCode.apply(String, bytes);
+    var stringArray = stringFromBytes.split(',');
     decoded.electrical_conductivity = parseFloat(stringArray[0]);
     decoded.total_dissolved_solids = parseFloat(stringArray[1]);
     decoded.salinity = parseFloat(stringArray[2]);
