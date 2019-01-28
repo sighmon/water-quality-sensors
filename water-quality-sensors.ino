@@ -4,6 +4,25 @@
 // By Simon Loffler 2019
 // ==========================
 
+/* Decoder function for the TTN console
+function Decoder(bytes, port) {
+  // Decode an uplink message from a buffer
+  // (array) of bytes to an object of fields.
+  var decoded = {};
+
+  if (port === 1) {
+    var byteString = String.fromCharCode.apply(String, bytes);
+    var stringArray = byteString.split(',');
+    decoded.electrical_conductivity = parseFloat(stringArray[0]);
+    decoded.total_dissolved_solids = parseFloat(stringArray[1]);
+    decoded.salinity = parseFloat(stringArray[2]);
+    decoded.specific_gravity = parseFloat(stringArray[3]);
+  }
+
+  return decoded;
+}
+*/
+
 #include <TheThingsNetwork.h>
 #include "secrets.h"
 // OTAA authentication
@@ -59,8 +78,8 @@ void setup() {
   ttn.showStatus();
 
   // Uncomment to join the network using OTAA
-//   debugSerial.println("-- JOIN");
-//   ttn.join(appEui, appKey);
+   debugSerial.println("-- JOIN");
+   ttn.join(appEui, appKey);
 
   // Uncomment to join the network using ABP
 //  debugSerial.println("-- PERSONALIZE");
