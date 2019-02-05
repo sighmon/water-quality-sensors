@@ -4,19 +4,26 @@ Measuring water quality using a conductivity sensor and a The Things Uno.
 
 <img src="atlas-scientific-conductivity-to-the-things-uno.jpg" width="100%">
 
+See also:
+* [Bluetooth Arduino code](https://github.com/sighmon/ble_nano_v2_sensors)
+* [iOS app code](https://github.com/sighmon/WaterQualitySensorsiOS)
+
 ## Hardware
 
 * [Atlas Scientific Conductivity K 1.0 sensor kit](https://www.atlas-scientific.com/product_pages/kits/ec_k1_0_kit.html)
 * [The Things Uno](https://www.thethingsnetwork.org/docs/devices/uno/)
+* [RedBear BLE Nano v2](https://redbear.cc/product/ble-nano-2.html)
 
 ## Wiring
 
-Atlas sensor pin | Power isolator pin
+I’ve drawn up a [Fritzing wiring diagram](water-quality-sensors-wiring-diagram.fzz), but didn’t have the power isolator layout… I’ll update that soon.
+
+Atlas sensor pin | Power isolator pin | BLE Nano
 --- | ---
-VCC | 3.9V
-GND | GND
-TX | A (In)
-RX | B (In)
+VCC | 3.9V | VIN
+GND | GND | GND
+TX | A (In) | RX
+RX | B (In) | -
 
 Power isolator pin | Arduino The Things Uno (Leonardo) pin
 --- | ---
