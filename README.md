@@ -19,7 +19,7 @@ See also:
 I’ve drawn up a [Fritzing wiring diagram](water-quality-sensors-wiring-diagram.fzz), but didn’t have the power isolator layout… I’ll update that soon.
 
 Atlas sensor pin | Power isolator pin | BLE Nano
---- | ---
+--- | --- | ---
 VCC | 3.9V | VIN
 GND | GND | GND
 TX | A (In) | RX
